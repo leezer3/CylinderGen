@@ -14,7 +14,7 @@ namespace CylinderGen
     {
         public string launchpath = AppDomain.CurrentDomain.BaseDirectory;
         public string texture;
-        public string texturefile = "texture.png";
+        public string texturefile = "example";
         public Form1()
         {
             InitializeComponent();
@@ -68,8 +68,7 @@ namespace CylinderGen
             }
             if (string.IsNullOrEmpty(texture))
             {
-                MessageBox.Show("No texture currently selected");
-                return;
+                texture = launchpath + "\\Textures\\example.png";
             }
             if (texturewrap.Value == 0)
             {
@@ -77,6 +76,7 @@ namespace CylinderGen
                 return;
             }
             string objectfile = Path.Combine(launchpath + "Output\\Cylinders\\" + MakeValidFileName(textBox1.Text));
+            File.Delete(objectfile);
             //Arrays
             decimal[] bottomarray;
             bottomarray = new decimal[3];
@@ -129,82 +129,100 @@ namespace CylinderGen
             var items = (double)totalfaces.Value;
             for (var i = 0; i < items; i++)
             {
-                double vertex1;
-                double vertex2;
-                double vertex3;
-                double vertex4;
                 double TopVertexoutX;
                 double TopVertexoutY;
                 double TopVertexoutZ;
                 double BottomVertexoutX;
                 double BottomVertexoutY;
                 double BottomVertexoutZ;
+                double TopNormalX = 0;
+                double TopNormalY = 0;
+                double TopNormalZ = 0;
+                double BottomNormalX = 0;
+                double BottomNormalY = 0;
+                double BottomNormalZ = 0;
 
                 if (Xequals == false)
                 {
                      //Points move along the X-Axis
-                     //X & Y Must be greater on the top
-
-                     //Load temporary verticies
-                     vertex1 = (double)toparray[1];
-                     vertex2 = (double)toparray[2];
-
-                     vertex3 = (double)bottomarray[1];
-                     vertex4 = (double)bottomarray[2];
-
                      TopVertexoutX = (double)toparray[0];
-                     TopVertexoutY = vertex1 + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
-                     TopVertexoutZ = vertex2 + (double)topradius.Value * Math.Sin(2 * Math.PI * i / items);
+                     TopVertexoutY = (double)toparray[1] + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
+                     TopVertexoutZ = (double)toparray[2] +(double)topradius.Value * Math.Sin(2 * Math.PI * i / items);
 
                      BottomVertexoutX = (double)bottomarray[0];
-                     BottomVertexoutY = vertex3 + (double)bottomradius.Value * Math.Cos(2 * Math.PI * i / items);
-                     BottomVertexoutZ = vertex4 + (double)bottomradius.Value * Math.Sin(2 * Math.PI * i / items);
+                     BottomVertexoutY = (double)bottomarray[1] +(double)bottomradius.Value * Math.Cos(2 * Math.PI * i / items);
+                     BottomVertexoutZ = (double)bottomarray[2] + (double)bottomradius.Value * Math.Sin(2 * Math.PI * i / items);
+                     if (normalsyes.Checked == true)
+                     {
+                         TopNormalX = 0;
+                         TopNormalY = (double)toparray[1] + (double)(topradius.Value +1) * Math.Cos(2 * Math.PI * i / items);
+                         TopNormalZ = (double)toparray[2] + (double)(topradius.Value +1) * Math.Sin(2 * Math.PI * i / items);
+
+                         BottomNormalX = 0;
+                         BottomNormalY = (double)bottomarray[1] + (double)(bottomradius.Value +1) * Math.Cos(2 * Math.PI * i / items);
+                         BottomNormalZ = (double)bottomarray[2] + (double)(bottomradius.Value +1) * Math.Sin(2 * Math.PI * i / items);
+                     }
                 }
                 else if(Yequals == false)
                 {
                     //Points move along the Y-Axis
-
-                    //Load temporary verticies
-                    vertex1 = (double)toparray[0];
-                    vertex2 = (double)toparray[2];
-
-                    vertex3 = (double)bottomarray[0];
-                    vertex4 = (double)bottomarray[2];
-
-                    TopVertexoutX = vertex1 + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
+                    TopVertexoutX = (double)toparray[0] + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
                     TopVertexoutY = (double)toparray[1];
-                    TopVertexoutZ = vertex2 + (double)topradius.Value * Math.Sin(2 * Math.PI * i / items);
+                    TopVertexoutZ = (double)toparray[2] + (double)topradius.Value * Math.Sin(2 * Math.PI * i / items);
 
-                    BottomVertexoutX = vertex3 + (double)bottomradius.Value * Math.Cos(2 * Math.PI * i / items);
+                    BottomVertexoutX = (double)bottomarray[0] + (double)bottomradius.Value * Math.Cos(2 * Math.PI * i / items);
                     BottomVertexoutY = (double)bottomarray[1];
-                    BottomVertexoutZ = vertex4 + (double)bottomradius.Value * Math.Sin(2 * Math.PI * i / items);
+                    BottomVertexoutZ = (double)bottomarray[2] + (double)bottomradius.Value * Math.Sin(2 * Math.PI * i / items);
+                    if (normalsyes.Checked == true)
+                    {
+                        TopNormalX = (double)toparray[0] + (double)(topradius.Value +1) * Math.Cos(2 * Math.PI * i / items);
+                        TopNormalY = 0;
+                        TopNormalZ = (double)toparray[2] + (double)(topradius.Value +1) * Math.Sin(2 * Math.PI * i / items);
+
+                        BottomNormalX = (double)bottomarray[0] + (double)(bottomradius.Value +1) * Math.Cos(2 * Math.PI * i / items);
+                        BottomNormalY = 0;
+                        BottomNormalZ = (double)bottomarray[2] + (double)(bottomradius.Value + 1) * Math.Sin(2 * Math.PI * i / items);
+                    }
+
                 }
                 else
                 {
                     //Points move along the Z-Axis
-                    //Y & Z Must be greater on the top
+                    TopVertexoutX = (double)toparray[0] + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
+                    TopVertexoutY = (double)toparray[1] + (double)topradius.Value * Math.Sin(2 * Math.PI * i / items);
+                    TopVertexoutZ = 0;
 
-                    //Load temporary verticies
-                    vertex1 = (double)toparray[0];
-                    vertex2 = (double)toparray[1];
+                    BottomVertexoutX = (double)bottomarray[0] + (double)bottomradius.Value * Math.Cos(2 * Math.PI * i / items);
+                    BottomVertexoutY = (double)bottomarray[1] + (double)bottomradius.Value * Math.Sin(2 * Math.PI * i / items);
+                    BottomVertexoutZ = 0;
+                    if (normalsyes.Checked == true)
+                    {
+                        TopNormalX = (double)toparray[0] + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
+                        TopNormalY = (double)toparray[1] + (double)topradius.Value * Math.Sin(2 * Math.PI * i / items);
+                        TopNormalZ = (double)toparray[2];
 
-                    vertex3 = (double)bottomarray[0];
-                    vertex4 = (double)bottomarray[1];
-
-                    TopVertexoutX = vertex1 + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
-                    TopVertexoutY = vertex2 + (double)topradius.Value * Math.Sin(2 * Math.PI * i / items);
-                    TopVertexoutZ = (double)toparray[2];
-
-                    BottomVertexoutX = vertex3 + (double)bottomradius.Value * Math.Cos(2 * Math.PI * i / items);
-                    BottomVertexoutY = vertex4 + (double)bottomradius.Value * Math.Sin(2 * Math.PI * i / items);
-                    BottomVertexoutZ = (double)bottomarray[2];
+                        BottomNormalX = (double)bottomarray[0] + (double)(bottomradius.Value + 1) * Math.Cos(2 * Math.PI * i / items);
+                        BottomNormalY = (double)bottomarray[1] + (double)(bottomradius.Value + 1) * Math.Sin(2 * Math.PI * i / items);
+                        BottomNormalZ = 0;
+                    }
                 }
-                
 
 
+                string bottomvertex;
+                string topvertex;
                 //Now write out our completed vertex into the file
-                string bottomvertex = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomVertexoutX))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomVertexoutY))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomVertexoutZ))).ToString();
-                string topvertex = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopVertexoutX))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopVertexoutY))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopVertexoutZ))).ToString();
+                if (normalsyes.Checked == true)
+                {
+                    bottomvertex = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomVertexoutX))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomVertexoutY))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomVertexoutZ))).ToString()
+                        + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomNormalX))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomNormalY))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomNormalZ))).ToString();
+                    topvertex = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopVertexoutX))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopVertexoutY))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopVertexoutZ))).ToString()
+                        + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopNormalX))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopNormalY))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopNormalZ))).ToString();
+                }
+                else
+                {
+                    bottomvertex = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomVertexoutX))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomVertexoutY))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(BottomVertexoutZ))).ToString();
+                    topvertex = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopVertexoutX))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopVertexoutY))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(TopVertexoutZ))).ToString();
+                }
                 writeout.Add(bottomvertex);
                 writeout.Add(topvertex);
                 //Handle the final face & the central points
@@ -229,8 +247,8 @@ namespace CylinderGen
                     }
                     else if (bothface.Checked == true)
                     {
-                        string centraltop = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(toparray[0]))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(toparray[1]))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(toparray[2]))).ToString();
-                        string centralbottom = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(bottomarray[0]))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(bottomarray[1]))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(bottomarray[2]))).ToString();
+                        string centraltop = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(toparray[0]))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(toparray[1]))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(toparray[2]))).ToString() + ";ct";
+                        string centralbottom = "Vertex " + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(bottomarray[0]))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(bottomarray[1]))).ToString() + "," + Convert.ToDecimal(String.Format("{0:0.00}", Convert.ToDecimal(bottomarray[2]))).ToString() + ";cb";
                         writeout.Add(centraltop);
                         writeout.Add(centralbottom);
                     }
@@ -245,12 +263,12 @@ namespace CylinderGen
             face[3] = 0;
             //Face for top cap
             int[] topfacearray = new int[3];
-            topfacearray[0] = ((int)items * 2) + 1;
+            topfacearray[0] = ((int)items * 2) + 2;
             topfacearray[1] = 1;
             topfacearray[2] = 3;
             //Face for bottom cap
             int[] bottomfacearray = new int[3];
-            bottomfacearray[0] = ((int)items * 2) + 2;
+            bottomfacearray[0] = ((int)items * 2) + 3;
             bottomfacearray[1] = 0;
             bottomfacearray[2] = 2;
             //Now generate the Faces statements
@@ -258,25 +276,52 @@ namespace CylinderGen
             {
                 string currentface;
                 //Check if we need to reverse our face statements
-                if ((Xequals == false && toparray[0] > bottomarray[0] || Yequals == false && toparray[1] > bottomarray[2] || Zequals == false && toparray[3] > bottomarray[3]) && outside.Checked == true)
+                if (outside.Checked == true)
                 {
-                    currentface = "Face " + Convert.ToString(face[3]) + "," + Convert.ToString(face[2]) + "," + Convert.ToString(face[1]) + "," + Convert.ToString(face[0]);
-                    if (topface.Checked == true)
+                    //We're generating an outside face
+                    //Check if the top X is greater than the bottom X- If so, reverse
+                    //Check if the bottom Y is greater than the top Y- If so, reverse
+                    if (bottomarray[1] > toparray[1] || toparray[0] > bottomarray[0] || toparray[2] > bottomarray[2])
                     {
-                        string topout = "Face " + Convert.ToString(topfacearray[2]) + "," + Convert.ToString(topfacearray[1]) + "," + Convert.ToString(topfacearray[0]);
-                        writeout.Add(topout);
+                        currentface = "Face " + Convert.ToString(face[0]) + "," + Convert.ToString(face[1]) + "," + Convert.ToString(face[2]) + "," + Convert.ToString(face[3]);
+                        if (topface.Checked == true)
+                        {
+                            string topout = "Face " + Convert.ToString(topfacearray[0]) + "," + Convert.ToString(topfacearray[1]) + "," + Convert.ToString(topfacearray[2]);
+                            writeout.Add(topout);
+                        }
+                        else if (bottomface.Checked == true)
+                        {
+                            string bottomout = "Face " + Convert.ToString(bottomfacearray[2]) + "," + Convert.ToString(bottomfacearray[1]) + "," + Convert.ToString(bottomfacearray[0]);
+                            writeout.Add(bottomout);
+                        }
+                        else if (bothface.Checked == true)
+                        {
+                            string topout = "Face " + Convert.ToString(topfacearray[0]) + "," + Convert.ToString(topfacearray[1]) + "," + Convert.ToString(topfacearray[2]);
+                            writeout.Add(topout);
+                            string bottomout = "Face " + Convert.ToString(bottomfacearray[2]) + "," + Convert.ToString(bottomfacearray[1]) + "," + Convert.ToString(bottomfacearray[0]);
+                            writeout.Add(bottomout);
+                        }
                     }
-                    else if (bottomface.Checked == true)
+                    else
                     {
-                        string bottomout = "Face " + Convert.ToString(bottomfacearray[0]) + "," + Convert.ToString(bottomfacearray[1]) + "," + Convert.ToString(bottomfacearray[2]);
-                        writeout.Add(bottomout);
-                    }
-                    else if (bothface.Checked == true)
-                    {
-                        string topout = "Face " + Convert.ToString(topfacearray[2]) + "," + Convert.ToString(topfacearray[1]) + "," + Convert.ToString(topfacearray[0]);
-                        writeout.Add(topout);
-                        string bottomout = "Face " + Convert.ToString(bottomfacearray[0]) + "," + Convert.ToString(bottomfacearray[1]) + "," + Convert.ToString(bottomfacearray[2]);
-                        writeout.Add(bottomout);
+                        currentface = "Face " + Convert.ToString(face[3]) + "," + Convert.ToString(face[2]) + "," + Convert.ToString(face[1]) + "," + Convert.ToString(face[0]);
+                        if (topface.Checked == true)
+                        {
+                            string topout = "Face " + Convert.ToString(topfacearray[2]) + "," + Convert.ToString(topfacearray[1]) + "," + Convert.ToString(topfacearray[0]);
+                            writeout.Add(topout);
+                        }
+                        else if (bottomface.Checked == true)
+                        {
+                            string bottomout = "Face " + Convert.ToString(bottomfacearray[0]) + "," + Convert.ToString(bottomfacearray[1]) + "," + Convert.ToString(bottomfacearray[2]);
+                            writeout.Add(bottomout);
+                        }
+                        else if (bothface.Checked == true)
+                        {
+                            string topout = "Face " + Convert.ToString(topfacearray[2]) + "," + Convert.ToString(topfacearray[1]) + "," + Convert.ToString(topfacearray[0]);
+                            writeout.Add(topout);
+                            string bottomout = "Face " + Convert.ToString(bottomfacearray[0]) + "," + Convert.ToString(bottomfacearray[1]) + "," + Convert.ToString(bottomfacearray[2]);
+                            writeout.Add(bottomout);
+                        }
                     }
 
                 }
@@ -286,6 +331,7 @@ namespace CylinderGen
                 }
                 else
                 {
+                    
                         currentface = "Face " + Convert.ToString(face[0]) + "," + Convert.ToString(face[1]) + "," + Convert.ToString(face[2]) + "," + Convert.ToString(face[3]);
                         if (topface.Checked == true)
                         {
@@ -326,9 +372,22 @@ namespace CylinderGen
             writeout.Add("Load " + texturefile + ".png");
             //Calculate the texture split
             double textureinterval = ((double)texturewrap.Value / items);
-
+            //Check whether we need to add co-ordinates for top/ bottom face
+            int calculated;
+            if (topface.Checked == true || bottomface.Checked == true)
+            {
+                calculated = 2;
+            }
+            else if (bothface.Checked == true)
+            {
+                calculated = 3;
+            }
+            else
+            {
+                calculated = 1;
+            }
             int currentcoord = 0;
-            for (var i = 0; i < (items + 1); i++)
+            for (var i = 0; i < (items + calculated); i++)
             {
                 double textureinterval2 = textureinterval * i;
                                 

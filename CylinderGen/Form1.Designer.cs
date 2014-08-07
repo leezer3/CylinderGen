@@ -64,11 +64,15 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label17 = new System.Windows.Forms.Label();
-            this.topface = new System.Windows.Forms.RadioButton();
-            this.bottomface = new System.Windows.Forms.RadioButton();
-            this.bothface = new System.Windows.Forms.RadioButton();
             this.neitherface = new System.Windows.Forms.RadioButton();
+            this.bothface = new System.Windows.Forms.RadioButton();
+            this.bottomface = new System.Windows.Forms.RadioButton();
+            this.topface = new System.Windows.Forms.RadioButton();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.normalsyes = new System.Windows.Forms.RadioButton();
+            this.normalsno = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.bottomX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomZ)).BeginInit();
@@ -81,6 +85,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.texturewrap)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -304,7 +309,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(144, 561);
+            this.button1.Location = new System.Drawing.Point(144, 600);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 16;
@@ -374,7 +379,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 395);
+            this.label13.Location = new System.Drawing.Point(12, 434);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(170, 13);
             this.label13.TabIndex = 22;
@@ -382,7 +387,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(15, 411);
+            this.button2.Location = new System.Drawing.Point(15, 450);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 23;
@@ -393,7 +398,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(12, 494);
+            this.label14.Location = new System.Drawing.Point(12, 533);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(163, 13);
             this.label14.TabIndex = 24;
@@ -402,7 +407,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(15, 441);
+            this.label15.Location = new System.Drawing.Point(15, 480);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(255, 26);
             this.label15.TabIndex = 25;
@@ -411,7 +416,7 @@
             // texturewrap
             // 
             this.texturewrap.DecimalPlaces = 2;
-            this.texturewrap.Location = new System.Drawing.Point(54, 471);
+            this.texturewrap.Location = new System.Drawing.Point(54, 510);
             this.texturewrap.Name = "texturewrap";
             this.texturewrap.Size = new System.Drawing.Size(120, 20);
             this.texturewrap.TabIndex = 26;
@@ -423,7 +428,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(18, 510);
+            this.textBox1.Location = new System.Drawing.Point(18, 549);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(224, 20);
             this.textBox1.TabIndex = 27;
@@ -497,48 +502,6 @@
             this.panel2.Size = new System.Drawing.Size(329, 26);
             this.panel2.TabIndex = 31;
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(13, 337);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(220, 26);
-            this.label17.TabIndex = 32;
-            this.label17.Text = "Set whether the top and bottom faces of your\r\ncylinder should be visible:";
-            // 
-            // topface
-            // 
-            this.topface.AutoSize = true;
-            this.topface.Location = new System.Drawing.Point(4, 4);
-            this.topface.Name = "topface";
-            this.topface.Size = new System.Drawing.Size(68, 17);
-            this.topface.TabIndex = 0;
-            this.topface.TabStop = true;
-            this.topface.Text = "Top Only";
-            this.topface.UseVisualStyleBackColor = true;
-            // 
-            // bottomface
-            // 
-            this.bottomface.AutoSize = true;
-            this.bottomface.Location = new System.Drawing.Point(78, 3);
-            this.bottomface.Name = "bottomface";
-            this.bottomface.Size = new System.Drawing.Size(82, 17);
-            this.bottomface.TabIndex = 1;
-            this.bottomface.TabStop = true;
-            this.bottomface.Text = "Bottom Only";
-            this.bottomface.UseVisualStyleBackColor = true;
-            // 
-            // bothface
-            // 
-            this.bothface.AutoSize = true;
-            this.bothface.Location = new System.Drawing.Point(162, 3);
-            this.bothface.Name = "bothface";
-            this.bothface.Size = new System.Drawing.Size(47, 17);
-            this.bothface.TabIndex = 2;
-            this.bothface.TabStop = true;
-            this.bothface.Text = "Both";
-            this.bothface.UseVisualStyleBackColor = true;
-            // 
             // neitherface
             // 
             this.neitherface.AutoSize = true;
@@ -551,11 +514,95 @@
             this.neitherface.Text = "Neither";
             this.neitherface.UseVisualStyleBackColor = true;
             // 
+            // bothface
+            // 
+            this.bothface.AutoSize = true;
+            this.bothface.Location = new System.Drawing.Point(162, 3);
+            this.bothface.Name = "bothface";
+            this.bothface.Size = new System.Drawing.Size(47, 17);
+            this.bothface.TabIndex = 2;
+            this.bothface.TabStop = true;
+            this.bothface.Text = "Both";
+            this.bothface.UseVisualStyleBackColor = true;
+            // 
+            // bottomface
+            // 
+            this.bottomface.AutoSize = true;
+            this.bottomface.Location = new System.Drawing.Point(78, 3);
+            this.bottomface.Name = "bottomface";
+            this.bottomface.Size = new System.Drawing.Size(82, 17);
+            this.bottomface.TabIndex = 1;
+            this.bottomface.TabStop = true;
+            this.bottomface.Text = "Bottom Only";
+            this.bottomface.UseVisualStyleBackColor = true;
+            // 
+            // topface
+            // 
+            this.topface.AutoSize = true;
+            this.topface.Location = new System.Drawing.Point(4, 4);
+            this.topface.Name = "topface";
+            this.topface.Size = new System.Drawing.Size(68, 17);
+            this.topface.TabIndex = 0;
+            this.topface.TabStop = true;
+            this.topface.Text = "Top Only";
+            this.topface.UseVisualStyleBackColor = true;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(13, 337);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(220, 26);
+            this.label17.TabIndex = 32;
+            this.label17.Text = "Set whether the top and bottom faces of your\r\ncylinder should be visible:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(15, 395);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(257, 13);
+            this.label18.TabIndex = 33;
+            this.label18.Text = "Select whether custom normals should be generated:";
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.normalsno);
+            this.panel3.Controls.Add(this.normalsyes);
+            this.panel3.Location = new System.Drawing.Point(22, 411);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(315, 20);
+            this.panel3.TabIndex = 34;
+            // 
+            // normalsyes
+            // 
+            this.normalsyes.AutoSize = true;
+            this.normalsyes.Checked = true;
+            this.normalsyes.Location = new System.Drawing.Point(4, 1);
+            this.normalsyes.Name = "normalsyes";
+            this.normalsyes.Size = new System.Drawing.Size(43, 17);
+            this.normalsyes.TabIndex = 0;
+            this.normalsyes.TabStop = true;
+            this.normalsyes.Text = "Yes";
+            this.normalsyes.UseVisualStyleBackColor = true;
+            // 
+            // normalsno
+            // 
+            this.normalsno.AutoSize = true;
+            this.normalsno.Location = new System.Drawing.Point(53, 0);
+            this.normalsno.Name = "normalsno";
+            this.normalsno.Size = new System.Drawing.Size(39, 17);
+            this.normalsno.TabIndex = 1;
+            this.normalsno.Text = "No";
+            this.normalsno.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(363, 596);
+            this.ClientSize = new System.Drawing.Size(363, 634);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -606,6 +653,8 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -653,6 +702,10 @@
         private System.Windows.Forms.RadioButton topface;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.RadioButton neitherface;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.RadioButton normalsno;
+        private System.Windows.Forms.RadioButton normalsyes;
     }
 }
 
