@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
@@ -78,10 +74,8 @@ namespace CylinderGen
             string objectfile = Path.Combine(launchpath + "Output\\Cylinders\\" + MakeValidFileName(textBox1.Text));
             File.Delete(objectfile);
             //Arrays
-            decimal[] bottomarray;
-            bottomarray = new decimal[3];
-            decimal[] toparray;
-            toparray = new decimal[3];
+            decimal[] bottomarray = new decimal[3];
+            decimal[] toparray = new decimal[3];
             List<string> writeout = new List<string>();
             //Write Object Header
             writeout.Add(";Object created by OpenBVE Cylinder Generator 1.0");
@@ -163,7 +157,7 @@ namespace CylinderGen
                          BottomNormalZ = (double)bottomarray[2] + (double)(bottomradius.Value +1) * Math.Sin(2 * Math.PI * i / items);
                      }
                 }
-                else if(Yequals == false)
+                else if(Yequals == false && (Math.Abs(toparray[1] - bottomarray[1]) > Math.Abs(toparray[2] - bottomarray[2])))
                 {
                     //Points move along the Y-Axis
                     TopVertexoutX = (double)toparray[0] + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
@@ -190,16 +184,16 @@ namespace CylinderGen
                     //Points move along the Z-Axis
                     TopVertexoutX = (double)toparray[0] + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
                     TopVertexoutY = (double)toparray[1] + (double)topradius.Value * Math.Sin(2 * Math.PI * i / items);
-                    TopVertexoutZ = 0;
+                    TopVertexoutZ = (double)toparray[2];
 
                     BottomVertexoutX = (double)bottomarray[0] + (double)bottomradius.Value * Math.Cos(2 * Math.PI * i / items);
                     BottomVertexoutY = (double)bottomarray[1] + (double)bottomradius.Value * Math.Sin(2 * Math.PI * i / items);
-                    BottomVertexoutZ = 0;
+                    BottomVertexoutZ = (double)bottomarray[2];
                     if (normalsyes.Checked == true)
                     {
                         TopNormalX = (double)toparray[0] + (double)topradius.Value * Math.Cos(2 * Math.PI * i / items);
                         TopNormalY = (double)toparray[1] + (double)topradius.Value * Math.Sin(2 * Math.PI * i / items);
-                        TopNormalZ = (double)toparray[2];
+                        TopNormalZ = 0;
 
                         BottomNormalX = (double)bottomarray[0] + (double)(bottomradius.Value + 1) * Math.Cos(2 * Math.PI * i / items);
                         BottomNormalY = (double)bottomarray[1] + (double)(bottomradius.Value + 1) * Math.Sin(2 * Math.PI * i / items);
@@ -281,7 +275,29 @@ namespace CylinderGen
                     //We're generating an outside face
                     //Check if the top X is greater than the bottom X- If so, reverse
                     //Check if the bottom Y is greater than the top Y- If so, reverse
-                    if (bottomarray[1] > toparray[1] || toparray[0] > bottomarray[0] || toparray[2] > bottomarray[2])
+                    bool reversed = false;
+                    if (bottomarray[0] == toparray[0] && bottomarray[1] > toparray[1] && bottomarray[2] == toparray[2])
+                    {
+                        reversed = true;
+                    }
+                    if (toparray[0] > bottomarray[0] && bottomarray[1] == toparray[1] && bottomarray[2] == toparray[2])
+                    {
+                        reversed = true;
+                    }
+                    if(toparray[0] == bottomarray[0] && bottomarray[1] == toparray[1] && toparray[2] > bottomarray[2])
+                    {
+                        reversed = true;
+                    }
+                    if (toparray[0] > bottomarray[0] && toparray[1] > bottomarray[1] && toparray[2] == bottomarray[2])
+                    {
+                        reversed = true;
+                    }
+                    if (toparray[0] > bottomarray[0] && toparray[1] == bottomarray[1] && toparray[2] > bottomarray[2])
+                    {
+                        reversed = true;
+                    }
+
+                    if(reversed == true)
                     {
                         currentface = "Face " + Convert.ToString(face[0]) + "," + Convert.ToString(face[1]) + "," + Convert.ToString(face[2]) + "," + Convert.ToString(face[3]);
                         if (topface.Checked == true)
